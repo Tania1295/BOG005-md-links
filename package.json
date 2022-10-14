@@ -1,7 +1,22 @@
 {
-  "name": "md-links",
-  "version": "0.1.0",
-  "engines": {
-    "node": ">=14.x"
-  }
+  "name": "tinfantebonilla-md-links",
+  "version": "1.0.0",
+  "description": "Library that allows validating found links in markdown files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tania1295/BOG005-md-links.git"
+  },
+  "keywords": [
+    "markdown"
+  ],
+  "author": "Tania Infante Bonilla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tania1295/BOG005-md-links/issues"
+  },
+  "homepage": "https://github.com/Tania1295/BOG005-md-links#readme"
 }
