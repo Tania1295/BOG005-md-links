@@ -12,14 +12,13 @@ console.log(existsFile(pathWay))
 const mdLinks = (pathWay, options) => {
   return new Promise((resolve, reject) => {
     if (fs.existsSync(pathWay) === true) {
-      resolve(console.log("existe"))
+      resolve(console.log("The path exist"))
     } else {
-      reject(new Error('No es una ruta válida'));
+      reject(new Error('Is a invalid path'));
     }
   })
 
 }
-
 
 /* function existsFile(pathWay) {
   return new Promise((resolve, reject) => {

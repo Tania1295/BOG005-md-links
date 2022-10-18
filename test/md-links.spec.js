@@ -1,9 +1,8 @@
-const mdLinks = require('../');
-
+const mdLinks = require('../index.js');
 
 describe('mdLinks', () => {
 
-  it('should...', () => {
+  it('Should...', () => {
     console.log('FIX ME!');
   });
 
