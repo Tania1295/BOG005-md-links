@@ -1,49 +1,17 @@
-const fs = require('fs');
+const { existsFile } = require('./functions.js');
 
-const pathWay = "prueba.md";
-console.log(pathWay)
+const pathWay = 'proof.md';
 
-function existsFile(pathWay) {
-  return fs.existsSync(pathWay);
-}
-
-console.log(existsFile(pathWay))
-
-const mdLinks = (pathWay, options) => {
+const mdLinks = (pathWay) => {
   return new Promise((resolve, reject) => {
-    if (fs.existsSync(pathWay) === true) {
-      resolve(console.log("The path exist"))
+    if (existsFile(pathWay)) {
+      resolve(console.log('The path exist'))
     } else {
       reject(new Error('Is a invalid path'));
     }
   })
-
-}
-
-/* function existsFile(pathWay) {
-  return new Promise((resolve, reject) => {
-    fs.stat(pathWay, (err, stats) => {
-      if (pathWay === 'null') {
-        reject(err);
-      }
-      // resolvemos la promesa
-      resolve(stats.isFile());
-    });
-  })
 };
 
-existsFile(pathWay)
-  .then(exists => {
-    if (exists) {
-      console.log("Existe")
-    } else {
-      //lanza error
-    }
-  })
-  .catch(err => {
-    console.log("error")
-  }); */
+mdLinks(pathWay);
 
-mdLinks(pathWay)
-
-module.export = { existsFile };
+module.export = { mdLinks };
