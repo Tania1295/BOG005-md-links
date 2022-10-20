@@ -1,17 +1,17 @@
-const { existsFile } = require('./functions.js');
+const { existsPath } = require('./functions.js');
 
 const pathWay = 'proof.md';
 
 const mdLinks = (pathWay) => {
   return new Promise((resolve, reject) => {
-    if (existsFile(pathWay)) {
-      resolve(console.log('The path exist'))
+    if (existsPath(pathWay)) {
+      resolve(console.log('The path exist:', existsPath))
     } else {
-      reject(new Error('Is a invalid path'));
+      reject(new Error('Is a invalid path:', eexistsPath));
     }
   })
 };
 
 mdLinks(pathWay);
 
-module.export = { mdLinks };
+module.exports = { mdLinks };

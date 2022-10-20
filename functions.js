@@ -4,8 +4,8 @@ const path = require('path');
 const pathWay = 'proof1.md';
 
 // Confirmar si la ruta existe
-const existsFile = (pathWay) => fs.existsSync(pathWay);
-console.log(typeof existsFile);
+const existsPath = (pathWay) => fs.existsSync(pathWay);
+console.log(typeof existsDocument);
 
 // Confirmar si la ruta es absoluta si no es así convertirla en absoluta
 function absolutePath(pathWay) {
@@ -20,7 +20,7 @@ function absolutePath(pathWay) {
 
 absolutePath(pathWay);
 
-module.export = {
-  existsFile: existsFile,
-  absolutePath: absolutePath
+module.exports = {
+  existsPath,
+  absolutePath
 };
