@@ -11,7 +11,7 @@ const pathWay = 'proof.md';
 const mdLinks = (pathWay) => {
   return new Promise((resolve, reject) => {
     if (existsPath(pathWay)) {
-      console.log(chalk.inverse.blue('The path exist:', existsPath));
+      console.log(chalk.inverse.blue('The path exist:', pathWay));
       absolutePath(pathWay)
       if (isDirectory(absolutePath())) {
 

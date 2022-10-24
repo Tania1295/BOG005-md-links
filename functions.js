@@ -46,7 +46,6 @@ function getFiles(pathWay) {
       } else {
         if (path.extname(pathDirectory) === ".md") {
           arrayPaths.push(pathDirectory);
-          console.log(chalk.inverse.blue("In the directory are files .md", file));
         }
       }
     })
@@ -59,5 +58,6 @@ module.exports = {
   existsPath,
   absolutePath,
   extensionName,
-  isDirectory
+  isDirectory,
+  getFiles
 };

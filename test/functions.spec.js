@@ -1,4 +1,10 @@
-const { existsPath, absolutePath } = require("../functions.js")
+const {
+  existsPath,
+  absolutePath,
+  extensionName,
+  isDirectory,
+  getFiles
+} = require("../functions.js")
 
 const testRoute = '.\\proof\\proof1.md';
 const testRouteFalse = '.\\proof1.md';
@@ -29,5 +35,15 @@ describe('Absolute Path', () => {
 
   it('Absolute Path should confirm an absolute path because receive an absolute path', () => {
     expect(absolutePath(testRouteAbsolute)).toEqual(testRouteAbsolute);
+  });
+});
+
+describe('Extension name', () => {
+  it('Extension name should be a function', () => {
+    expect(typeof extensionName).toBe('function');
+  });
+
+  it('Extension name confirm it´s a .md file', () => {
+    expect(extensionName(testRoute)).toBe('.md');
   });
 });
