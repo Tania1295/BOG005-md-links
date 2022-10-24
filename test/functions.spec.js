@@ -44,6 +44,6 @@ describe('Extension name', () => {
   });
 
   it('Extension name confirm it´s a .md file', () => {
-    expect(extensionName(testRoute)).toBe('.md');
+    expect(extensionName(testRoute)).toEqual('.md');
   });
 });

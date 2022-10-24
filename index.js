@@ -3,7 +3,9 @@ const chalk = require('chalk');
 const {
   existsPath,
   absolutePath,
-  isDirectory
+  extensionName,
+  isDirectory,
+  getFiles
 } = require('./functions.js');
 
 const pathWay = 'proof.md';
