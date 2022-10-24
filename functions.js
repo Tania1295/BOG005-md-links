@@ -49,15 +49,14 @@ function getFiles(pathWay) {
         }
       }
     })
+    return arrayPaths;
   }
-  return arrayPaths;
-}
-console.log(getFiles(pathWay));
+  console.log(getFiles(pathWay));
 
-module.exports = {
-  existsPath,
-  absolutePath,
-  extensionName,
-  isDirectory,
-  getFiles
-};
+  module.exports = {
+    existsPath,
+    absolutePath,
+    extensionName,
+    isDirectory,
+    getFiles
+  };
