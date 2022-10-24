@@ -1,4 +1,8 @@
-const { existsPath, absolutePath, isDirectory } = require('./functions.js');
+const {
+  existsPath,
+  absolutePath,
+  isDirectory
+} = require('./functions.js');
 
 const pathWay = 'proof.md';
 
