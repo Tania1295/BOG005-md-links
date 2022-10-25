@@ -8,17 +8,18 @@ const {
   getFiles
 } = require('./functions.js');
 
-const pathWay = 'proof.md';
+const pathWay = 'package.json';
 
 const mdLinks = (pathWay) => {
   return new Promise((resolve, reject) => {
     if (existsPath(pathWay)) {
       console.log(chalk.inverse.blue('The path exist:', pathWay));
-      const absoPath = absolutePath(pathWay)
-      if (absoPath().isDirectory()) {
-
+      const absoPath = absolutePath(pathWay);
+      console.log(chalk.inverse.blue('The absolute path is:', absoPath));
+      if (absoPath.isDirectory()) {
+        console.log(chalk.inverse.blue('Is a directory:', isDirectory));
       } else {
-
+        console.log(chalk.inverse.purple('Is a file:', isDirectory));
       }
       resolve(console.log('The path exist:', existsPath))
     } else {

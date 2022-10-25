@@ -8,8 +8,7 @@ const {
 
 const testRoute = '.\\proof\\proof1.md';
 const testRouteFalse = '.\\proof1.md';
-const testRouteAbsolute = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\BOG005-md-links-tania\\proof\\proof1.md';
-
+const testRouteAbsolute = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md';
 describe('Exists Path', () => {
   it('Exists path should be a function', () => {
     expect(typeof existsPath).toBe('function');
@@ -44,6 +43,13 @@ describe('Extension name', () => {
   });
 
   it('Extension name confirm it´s a .md file', () => {
-    expect(extensionName(testRoute)).toEqual('.md');
+    expect(extensionName(testRoute)).toEqual(true);
   });
+});
+
+describe('Is a directory', () => {
+  it.only('Is a directory should be a function', () => {
+    expect(typeof isDirectory).toBe('function');
+  });
+
 });

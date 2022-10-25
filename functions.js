@@ -22,7 +22,7 @@ const absolutePath = (pathWay) => {
 
 // Confirmar la extensión del archivo
 const extensionName = (pathWay) => path.extname(pathWay) === '.md';
-// console.log(extensionName(pathWay));
+console.log(extensionName(pathWay));
 
 // Confirmar si es un directorio
 const isDirectory = (pathWay) => fs.statSync(pathWay).isDirectory();
@@ -44,19 +44,18 @@ function getFiles(pathWay) {
       if (fs.statSync(realPath).isDirectory() === true) {
         arrayPaths = arrayPaths.concat(getFiles(pathDirectory));
       } else {
-        if (path.extname(pathDirectory) === ".md") {
-          arrayPaths.push(pathDirectory);
-        }
-      }
-    })
-    return arrayPaths;
-  }
-  console.log(getFiles(pathWay));
 
-  module.exports = {
-    existsPath,
-    absolutePath,
-    extensionName,
-    isDirectory,
-    getFiles
-  };
+      }
+  })
+  return arrayPaths;
+}
+}
+console.log(getFiles(pathWay));
+
+module.exports = {
+  existsPath,
+  absolutePath,
+  extensionName,
+  isDirectory,
+  getFiles
+};
