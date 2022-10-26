@@ -57,7 +57,14 @@ if (extName(pathDirectory)){
 console.log(chalk.inverse.greenBright(getFiles(pathWay)));
 
 // Leer archivos .md para extraer links
+/* function getLinks(pathWay){
+  const arryLinks = [];
+  const ruteToRead = fs.readFileSync(pathWay, 'utf-8');
 
+  if (ruteToRead !== ''){
+const findUrl = ruteToRead.match(/\[.*\]\(.*\)/gm);
+  }
+} */
 
 module.exports = {
   existsPath,

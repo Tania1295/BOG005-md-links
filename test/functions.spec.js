@@ -61,11 +61,11 @@ describe('Is a directory', () => {
 });
 
 describe('Get files', () => {
-  it.only('Get files should be a function', () => {
+  it('Get files should be a function', () => {
     expect(typeof getFiles).toBe('function');
   });
 
-  it.only('Get file should read a directory', () => {
+  it('Get file should read a directory', () => {
     const arrayDirectory =
     [
       'proof\\subproof\\proof3.md',
