@@ -9,6 +9,8 @@ const {
 const testRoute = '.\\proof\\proof1.md';
 const testRouteFalse = '.\\proof1.md';
 const testRouteAbsolute = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md';
+const testDirectory = '.\\proof';
+
 describe('Exists Path', () => {
   it('Exists path should be a function', () => {
     expect(typeof existsPath).toBe('function');
@@ -48,8 +50,30 @@ describe('Extension name', () => {
 });
 
 describe('Is a directory', () => {
-  it.only('Is a directory should be a function', () => {
+  it('Is a directory should be a function', () => {
     expect(typeof isDirectory).toBe('function');
   });
 
+  it('Is a directory should read the directory', () => {
+    const arrays = isDirectory(testDirectory);
+    expect(!arrays).toEqual(false);
+  });
+});
+
+describe('Get files', () => {
+  it.only('Get files should be a function', () => {
+    expect(typeof getFiles).toBe('function');
+  });
+
+  it.only('Get file should read a directory', () => {
+    const arrayDirectory =
+    [
+      'proof\\subproof\\proof3.md',
+      'proof\\proof1.md',
+      'proof\\proof2.md'
+    ]
+    const arrays = isDirectory(testDirectory);
+
+    expect(arrays).toEqual(arrayDirectory);
+  });
 });
