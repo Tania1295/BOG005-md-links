@@ -10,6 +10,7 @@ const testRoute = '.\\proof\\proof1.md';
 const testRouteFalse = '.\\proof1.md';
 const testRouteAbsolute = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md';
 const testDirectory = '.\\proof';
+const testDirectoryFalse = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\test\\functions.spec.js';
 
 describe('Exists Path', () => {
   it('Exists path should be a function', () => {
@@ -67,13 +68,18 @@ describe('Get files', () => {
 
   it('Get file should read a directory', () => {
     const arrayDirectory =
-    [
-      'proof\\subproof\\proof3.md',
-      'proof\\proof1.md',
-      'proof\\proof2.md'
-    ]
-    const arrays = isDirectory(testDirectory);
+      [
+        'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md',
+        'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof2.md',
+        'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\subproof\\proof3.md'
+      ]
+    const arrays = getFiles(testDirectory);
 
     expect(arrays).toEqual(arrayDirectory);
   });
+
+  it('Get file should return an empty array when it´s not a .md file', () => {
+    expect(getFiles(testDirectoryFalse)).toEqual([]);
+  });
+
 });

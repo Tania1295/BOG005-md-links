@@ -1,9 +1,11 @@
-const chalk = require('chalk');
 const fs = require('fs'); // File system
 const path = require('path');
+const chalk = require('chalk');
 
 const pathWay = 'proof';
-const pathWayTwo = 'package.json';
+// const pathWay = 'package.json';
+// const pathWay = '.\\proof\\proof1.md';
+// const pathFiles = 'proof';
 
 // Confirmar si la ruta existe
 const existsPath = (pathWay) => fs.existsSync(pathWay);
@@ -15,6 +17,7 @@ const absolutePath = (pathWay) => {
   if (absoPath === false) {
     const convertPath = path.resolve(pathWay)
     // console.log(convertPath)
+    // console.log(pathWay)
     return convertPath
   }
   return pathWay
@@ -29,47 +32,52 @@ const isDirectory = (pathWay) => fs.statSync(pathWay).isDirectory();
 // console.log(isDirectory(pathWay));
 
 // Obtener archivos .md y leer dentro de un directorio si hay archivos .md
-function getFiles(pathWay) {
+const getFiles = (pathWay) => {
   const realPath = absolutePath(pathWay);
-  const extName = extensionName(pathWay);
   let arrayPaths = [];
-  // Confirmar si hay archivo .md
+  // Confirmar si es un archivo .md
   if (fs.statSync(realPath).isFile() === true && path.extname(realPath) === '.md') {
     arrayPaths.push(realPath);
-    console.log(chalk.inverse.magenta('Check if it´s a file and has a extension .md', arrayPaths));
   } else if (fs.statSync(realPath).isFile() && path.extname(realPath) !== '.md') {
     console.log(chalk.inverse.red('It´s not a .md file', realPath));
   }
   else { // Confirmar si es un directorio
     fs.readdirSync(realPath).forEach(file => {
       let pathDirectory = path.join(realPath, file);
-      if (fs.statSync(realPath).isDirectory()) {
+      if (fs.statSync(realPath).isDirectory() === true) {
         arrayPaths = arrayPaths.concat(getFiles(pathDirectory));
+        console.log(chalk.inverse.magenta('Read the directory looking for files', file));
       } else {
-if (extName(pathDirectory)){
-  arrayPaths.push(pathDirectory)
-}
-    }
-  })
-}
+        if (path.extname(pathDirectory) === '.md') {
+          arrayPaths.push(pathDirectory)
+        }
+      }
+    })
+  }
   return arrayPaths;
 }
-console.log(chalk.inverse.greenBright(getFiles(pathWay)));
+console.log(getFiles(pathWay));
 
 // Leer archivos .md para extraer links
-/* function getLinks(pathWay){
-  const arryLinks = [];
-  const ruteToRead = fs.readFileSync(pathWay, 'utf-8');
-
-  if (ruteToRead !== ''){
-const findUrl = ruteToRead.match(/\[.*\]\(.*\)/gm);
+const findLinks = (param1, param2) => {
+  const regExp = /\[(.+)\]\((https?:\/\/.+)\)/gi;
+  let arrayLinks = [...param1.matchAll(regExp)];
+  let arrayObjects = [];
+  for (var i = 0; i < arrayLinks.length; i++) {
+    arrayObjects.push({
+      href: arrayLinks[i][2],
+      text: arrayLinks[i][1],
+      file: param2,
+    });
   }
-} */
+  return arrayObjects;
+};
+console.log('Encontrar links', findLinks)
 
 module.exports = {
   existsPath,
   absolutePath,
   extensionName,
   isDirectory,
-  getFiles
+  getFiles,
 };

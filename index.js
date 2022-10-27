@@ -1,26 +1,27 @@
 const fs = require('fs');
-const chalk = require('chalk');
+// const chalk = require('chalk');
 
 const {
   existsPath,
   absolutePath,
-  getFiles
+  getFiles,
+  getLinks
 } = require('./functions.js');
 
 const pathWay = 'proof';
 
 const mdLinks = (pathWay) => {
   return new Promise((resolve, reject) => {
-if (existsPath(pathWay)){
-  console.log(chalk.inverse.blue('The path exist'));
-  const absoPath = absolutePath(pathWay);
-  console.log(chalk.inverse.blue('The absolute path is:', absoPath));
-  if (fs.statSync(absoPath).isDirectory()){
-    console.log(chalk.inverse.blue('The directory is:', absoPath));
-    const arrMd = getFiles(absoPath);
-    console.log(chalk.inverse.blue('The array from the directory is:', arrMd));
-  }
-}
+    if (existsPath(pathWay)) {
+      console.log('The path exist');
+      const absoPath = absolutePath(pathWay);
+      console.log('The absolute path is:', absoPath);
+      if (fs.statSync(absoPath).isDirectory()) {
+        console.log('The directory is:', absoPath);
+        const arrMd = getFiles(absoPath);
+        console.log('The array from the directory is:', arrMd);
+      }
+    }
   })
 };
 
