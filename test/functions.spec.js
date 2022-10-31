@@ -3,7 +3,8 @@ const {
   absolutePath,
   extensionName,
   isDirectory,
-  getFiles
+  getFiles,
+  readFileMd
 } = require("../functions.js")
 
 const testRoute = '.\\proof\\proof1.md';
@@ -82,4 +83,10 @@ describe('Get files', () => {
     expect(getFiles(testDirectoryFalse)).toEqual([]);
   });
 
+});
+
+describe('Read files', () => {
+  it('Read files should be a function', () => {
+    expect(typeof readFileMd).toBe('function');
+  });
 });
