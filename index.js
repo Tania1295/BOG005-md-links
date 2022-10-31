@@ -4,8 +4,7 @@ const fs = require('fs');
 const {
   existsPath,
   absolutePath,
-  getFiles,
-  getLinks
+  getFiles
 } = require('./functions.js');
 
 const pathWay = 'proof';
@@ -13,7 +12,7 @@ const pathWay = 'proof';
 const mdLinks = (pathWay) => {
   return new Promise((resolve, reject) => {
     if (existsPath(pathWay)) {
-      console.log('The path exist');
+      console.log('The path exist.');
       const absoPath = absolutePath(pathWay);
       console.log('The absolute path is:', absoPath);
       if (fs.statSync(absoPath).isDirectory()) {

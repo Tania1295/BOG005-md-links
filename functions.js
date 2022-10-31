@@ -1,10 +1,11 @@
 const fs = require('fs'); // File system
 const path = require('path');
+const marked = require('marked');
 const chalk = require('chalk');
 
-const pathWay = 'proof';
+// const pathWay = 'proof';
 // const pathWay = 'package.json';
-// const pathWay = '.\\proof\\proof1.md';
+const pathWay = '.\\proof\\proof1.md';
 // const pathFiles = 'proof';
 
 // Confirmar si la ruta existe
@@ -39,14 +40,13 @@ const getFiles = (pathWay) => {
   if (fs.statSync(realPath).isFile() === true && path.extname(realPath) === '.md') {
     arrayPaths.push(realPath);
   } else if (fs.statSync(realPath).isFile() && path.extname(realPath) !== '.md') {
-    console.log(chalk.inverse.red('It´s not a .md file', realPath));
+    console.log(chalk.inverse.red("It´s not a .md file", realPath));
   }
   else { // Confirmar si es un directorio
     fs.readdirSync(realPath).forEach(file => {
       let pathDirectory = path.join(realPath, file);
       if (fs.statSync(realPath).isDirectory() === true) {
         arrayPaths = arrayPaths.concat(getFiles(pathDirectory));
-        console.log(chalk.inverse.magenta('Read the directory looking for files', file));
       } else {
         if (path.extname(pathDirectory) === '.md') {
           arrayPaths.push(pathDirectory)
@@ -56,9 +56,38 @@ const getFiles = (pathWay) => {
   }
   return arrayPaths;
 }
-console.log(getFiles(pathWay));
 
-// Leer archivos .md para extraer links
+// Leer un archivo
+const readfileContent = (pathWay) => fs.readFile(pathWay, "utf-8");
+console.log(readfileContent(pathWay))
+
+// Obtener arreglo con los archivos .md
+const arrayFilesMd = getFiles(pathWay);
+
+// Leer archivo .md para extraer los links
+function findLinks(filePathMD) {
+  return new Promise((resolve, reject) => {
+    const linksArray = [];
+    fs.readFile(filePathMD, 'utf-8', (err, data) => {
+      if (err) resolve(err);
+      marked.marked(data, {
+        walkTokens: (token) => {
+          if (token.type === 'link' && token.href.includes('http')) {
+            linksArray.push({
+              href: token.href,
+              text: token.text,
+              file: filePathMD
+            })
+          }
+        }
+      })
+      resolve(linksArray)
+    })
+  })
+}
+console.log(findLinks(filePathMD))
+
+/* // Leer archivo .md para extraer links
 const findLinks = (param1, param2) => {
   const regExp = /\[(.+)\]\((https?:\/\/.+)\)/gi;
   let arrayLinks = [...param1.matchAll(regExp)];
@@ -72,7 +101,7 @@ const findLinks = (param1, param2) => {
   }
   return arrayObjects;
 };
-console.log('Encontrar links', findLinks)
+console.log(findLinks(pathWay)) */
 
 module.exports = {
   existsPath,
@@ -80,4 +109,6 @@ module.exports = {
   extensionName,
   isDirectory,
   getFiles,
+  readfileContent,
+  findLinks
 };
