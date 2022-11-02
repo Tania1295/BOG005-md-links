@@ -4,9 +4,9 @@ const marked = require('marked');
 const chalk = require('chalk');
 const fetch = require('node-fetch');
 
-// const pathWay = 'proof';
+const pathWay = 'proof';
 // const pathWay = 'package.json';
-const pathWay = '.\\proof\\proof1.md';
+// const pathWay = '.\\proof\\proof1.md';
 // const pathFiles = 'proof';
 
 // Confirmar si la ruta existe
@@ -57,18 +57,18 @@ const getFiles = (pathWay) => {
   }
   return arrayPaths;
 }
-console.log(getFiles(pathWay))
+// console.log(getFiles(pathWay))
 
 // Función getFiles ejecutandose y trayendo el array de links
 const arrayMdFiles = getFiles(pathWay);
-console.log("Get the array from files .md", arrayMdFiles);
+// console.log("Get the array of files .md", arrayMdFiles);
 
 // Leyendo archivos para obtener los links con la información necesaria
-const readFileMd = (pathArray) => {
+const readFileMd = (arrayMdFiles) => {
   return new Promise((resolve, reject) => {
     let arrLinks = [];
-    pathArray.forEach(file => {
-      fs.readFile(pathWay, 'utf-8', (err, data) => {
+    arrayMdFiles.forEach(file => {
+      fs.readFile(file, 'utf-8', (err, data) => {
         if (err) {
           reject(err)
         } else {
@@ -90,9 +90,70 @@ const readFileMd = (pathArray) => {
     })
   })
 }
-console.log(readFileMd(arrayMdFiles), "Se extraen links")
+// console.log("Should get the links of the files", readFileMd(arrayMdFiles));
+// const objeLinks = readFileMd(arrayMdFiles).then((data) => { return data });
 
-readFileMd(arrayMdFiles).then((data) => { console.log('Read the files: ', data) })
+const objeLinks = [
+  {
+    href: 'https://es.wikipedia.org/wiki/Markdown',
+    title: 'Markdown',
+    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
+  },
+  {
+    href: 'https://developers.google.com/v8/',
+    title: 'JavaScript V8 Chrome',
+    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
+  }
+];
+
+/* // Validar el estado de los links
+const linksStatus = (objeLinks) => {
+  return new Promise((resolve, reject) =>
+    newArrayPromises = []
+  objeLinks.forEach((data) => {
+      const httpLink = objLinks.href;
+      const promise = fetch(httpLink)
+        .then((response) => {
+          return {
+            href: data.href,
+            text: data.text,
+            file: data.file,
+            status: response.status,
+            message: response.status >= 200 && response.status < 400 ? 'Ok' : 'Fail',
+          }
+        })
+        .catch((error) => ({
+          href: link.href,
+          text: link.text,
+          file: link.file,
+          status: 'Not found' + " " + error,
+          message: 'Fail',
+        }))
+      console.log("Hola", arrayStatus);
+      return Promise.all(arrayStatus);
+    })
+  )
+}
+
+linksStatus('.\\proof\\subproof\\proof3.md').then((link) => console.log(link)).catch((err) => console.log(err)); */
+
+fetch("/robots.txt")
+  .then(function (response) {
+    /** Código que procesa la respuesta **/
+  });
+
+/* // Función para tener las estadisticas de los links
+const statsLinks = (newArrayPromises) => {
+  const total = newArrayPromises.length;
+  const unique = newArrayPromises.filter((objLi) => objLi.message === 'Ok').length;
+  const broken = newArrayPromises.filter((objLi) => objLi.message === 'Fail').length;
+  return {
+    total,
+    unique,
+    broken,
+  };
+};
+console.log(statsLinks(arrayMdFiles), total.length) */
 
 module.exports = {
   existsPath,
@@ -100,5 +161,6 @@ module.exports = {
   extensionName,
   isDirectory,
   getFiles,
-  readFileMd
+  readFileMd,
+  linksStatus
 };
