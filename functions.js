@@ -91,6 +91,7 @@ const readFileMd = (arrayMdFiles) => {
   })
 }
 // console.log("Should get the links of the files", readFileMd(arrayMdFiles));
+// readFileMd(arrayMdFiles).then((data) => { console.log('Get the array of .md', data) });
 // const objeLinks = readFileMd(arrayMdFiles).then((data) => { return data });
 
 const objeLinks = [
@@ -106,20 +107,20 @@ const objeLinks = [
   }
 ];
 
-/* // Validar el estado de los links
+// Validar el estado de los links
 const linksStatus = (objeLinks) => {
-  return new Promise((resolve, reject) =>
-    newArrayPromises = []
-  objeLinks.forEach((data) => {
-      const httpLink = objLinks.href;
+  return new Promise((resolve, reject) => {
+    newArrayPromises = [];
+    objeLinks.forEach((data) => {
+      const httpLink = objeLinks.href;
       const promise = fetch(httpLink)
-        .then((response) => {
+        .then((promise) => {
           return {
             href: data.href,
             text: data.text,
             file: data.file,
-            status: response.status,
-            message: response.status >= 200 && response.status < 400 ? 'Ok' : 'Fail',
+            status: promise.status,
+            message: promise.status >= 200 && promise.status < 400 ? 'Ok' : 'Fail',
           }
         })
         .catch((error) => ({
@@ -132,15 +133,9 @@ const linksStatus = (objeLinks) => {
       console.log("Hola", arrayStatus);
       return Promise.all(arrayStatus);
     })
-  )
+  })
 }
-
-linksStatus('.\\proof\\subproof\\proof3.md').then((link) => console.log(link)).catch((err) => console.log(err)); */
-
-fetch("/robots.txt")
-  .then(function (response) {
-    /** Código que procesa la respuesta **/
-  });
+linksStatus('.\\proof\\subproof\\proof3.md').then((link) => console.log(link)).catch((err) => console.log(err));
 
 /* // Función para tener las estadisticas de los links
 const statsLinks = (newArrayPromises) => {
@@ -161,6 +156,5 @@ module.exports = {
   extensionName,
   isDirectory,
   getFiles,
-  readFileMd,
-  linksStatus
+  readFileMd
 };

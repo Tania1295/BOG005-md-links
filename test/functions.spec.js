@@ -79,13 +79,17 @@ describe('Get files', () => {
     expect(arrays).toEqual(arrayDirectory);
   });
 
-  it('Get file should return an empty array when it´s not a .md file', () => {
+  it("Get file should return an empty array when it´s not a .md file", () => {
     expect(getFiles(testDirectoryFalse)).toEqual([]);
   });
 
 });
 
-describe('Read files', () => {
+describe('Read files MD', () => {
+  it('Read files should be a function', () => {
+    expect(typeof readFileMd).toBe('function');
+  });
+
   it('Read files should be a function', () => {
     expect(typeof readFileMd).toBe('function');
   });
