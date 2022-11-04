@@ -101,7 +101,7 @@ const objeLinks = [
     file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
   },
   {
-    href: 'https://developers.google.com/v8/',
+    href: 'https://deve.lopers.google.com/v8/',
     title: 'JavaScript V8 Chrome',
     file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
   }
@@ -109,46 +109,35 @@ const objeLinks = [
 
 // Validar el estado de los links
 const linksStatus = (objeLinks) => {
-  return new Promise((resolve, reject) => {
-    newArrayPromises = [];
-    objeLinks.forEach((data) => {
-      const httpLink = objeLinks.href;
-      const promise = fetch(httpLink)
-        .then((promise) => {
-          return {
-            href: data.href,
-            text: data.text,
-            file: data.file,
-            status: promise.status,
-            message: promise.status >= 200 && promise.status < 400 ? 'Ok' : 'Fail',
-          }
-        })
-        .catch((error) => ({
-          href: link.href,
-          text: link.text,
-          file: link.file,
-          status: 'Not found' + " " + error,
-          message: 'Fail',
-        }))
-      console.log("Hola", arrayStatus);
-      return Promise.all(arrayStatus);
-    })
+  const readLinks = objeLinks.map((data) => {
+    return fetch(data.href)
+      .then((promiseFetch) => {
+        data.status = promiseFetch.status;
+        data.message = promiseFetch.status <= 399 ? 'Ok' : 'Fail';
+        return data;
+      })
+      .catch((error) => {
+        data.status = 'Not found' + " " + error;
+        data.message = 'Fail';
+        return data;
+      })
   })
+  return Promise.all(readLinks);
 }
-linksStatus('.\\proof\\subproof\\proof3.md').then((link) => console.log(link)).catch((err) => console.log(err));
+// linksStatus(objeLinks).then((link) => console.log(link)).catch((err) => console.log(err));
 
-/* // Función para tener las estadisticas de los links
-const statsLinks = (newArrayPromises) => {
-  const total = newArrayPromises.length;
-  const unique = newArrayPromises.filter((objLi) => objLi.message === 'Ok').length;
-  const broken = newArrayPromises.filter((objLi) => objLi.message === 'Fail').length;
-  return {
-    total,
-    unique,
-    broken,
-  };
-};
-console.log(statsLinks(arrayMdFiles), total.length) */
+// Función para tener las estadisticas de los links
+// const statsLinks = (newArrayPromises) => {
+//   const total = newArrayPromises.length;
+//   const unique = newArrayPromises.filter((objLin) => objLi.message === 'Ok').length;
+//   const broken = newArrayPromises.filter((objLin) => objLi.message === 'Fail').length;
+//   return {
+//     total,
+//     unique,
+//     broken,
+//   };
+// };
+// console.log(statsLinks(arrayMdFiles), total.length)
 
 module.exports = {
   existsPath,
@@ -156,5 +145,6 @@ module.exports = {
   extensionName,
   isDirectory,
   getFiles,
-  readFileMd
+  readFileMd,
+  linksStatus
 };
