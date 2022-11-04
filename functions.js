@@ -124,20 +124,20 @@ const linksStatus = (objeLinks) => {
   })
   return Promise.all(readLinks);
 }
-// linksStatus(objeLinks).then((link) => console.log(link)).catch((err) => console.log(err));
+linksStatus(objeLinks).then((link) => console.log(link)).catch((err) => console.log(err));
 
 // Función para tener las estadisticas de los links
-// const statsLinks = (newArrayPromises) => {
-//   const total = newArrayPromises.length;
-//   const unique = newArrayPromises.filter((objLin) => objLi.message === 'Ok').length;
-//   const broken = newArrayPromises.filter((objLin) => objLi.message === 'Fail').length;
-//   return {
-//     total,
-//     unique,
-//     broken,
-//   };
-// };
-// console.log(statsLinks(arrayMdFiles), total.length)
+const statsLinks = (arrayPromises) => {
+  const total = arrayPromises.length;
+  const unique = arrayPromises.filter((data) => data.message === 'Ok').length;
+  const broken = arrayPromises.filter((data) => data.message === 'Fail').length;
+  return {
+    total,
+    unique,
+    broken,
+  };
+};
+linksStatus(objeLinks).then((link) => console.log(statsLinks(link))).catch((err) => console.log(err));
 
 module.exports = {
   existsPath,

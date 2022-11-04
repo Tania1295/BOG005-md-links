@@ -20,7 +20,10 @@ const mdLinks = (pathWay, option = { validate: false, stats: false }) => {
         console.log('The directory is:', absoPath);
         const arrMd = getFiles(absoPath);
         console.log('The array from the directory is:', arrMd);
-        const objLinks = readFileMd(arrMd).then(res => { console.log('The information of the links is:', res) });
+        const objLinks = readFileMd(arrMd).then(res => { console.log('The information of the links are:', res) });
+        if (option.validate === true) {
+
+        }
       }
     }
   })

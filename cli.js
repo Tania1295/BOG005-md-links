@@ -3,19 +3,16 @@ const { statsLinks } = require('./index.js');
 const mdLinks = require('./index.js');
 const gradient = require('gradient-string');
 const figlet = require('figlet');
-const clear = require('clear');
 const console = require('console');
-
-clear();
 
 const pathFile = process.argv.filter(pathWay => !(['--stats', '--validate'].includes(pathWay)))[2];
 const validate = process.argv.includes('--validate');
 const stats = process.argv.includes('--stats');
 const help = process.argv.includes('--help');
 
-mdLinks(pathFile, { Option: validate, option: stats, option: help })
+mdLinks(pathFile, { option: validate, option: stats, option: help })
     .then((links) => {
-        console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('Bienvenido a md-Link'))
+        console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('Welcome to md-Link librarie to figure out about your links'))
         if (validate) {
             links.forEach((obj) => {
 
@@ -37,9 +34,17 @@ mdLinks(pathFile, { Option: validate, option: stats, option: help })
             console.table([` Broken:${optionStats.broken}`])
 
         } if (help) {
-            console.log('Digita  --validate  para conocer los links y/o \nDigita  --stats   para conocer las estadisticas de los links'.green)
+            console.log('Write  --validate  to know the links or \nWrite  --stats to know the stats of the links'.green)
         }
 
-
     })
-    .catch((err) => console.log(err))
+    .catch((error) => console.log(error))
+    // if(validate){
+    //     mdLinks(pat, option {valida:true, stats: false}).then(.....)
+    // }
+    // if(validate && stats){
+    //     traemelosStats()
+    // }
+    // if(ruta){
+    //     ArmaOnjeto(ruta)
+    // }
