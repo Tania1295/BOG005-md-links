@@ -15,21 +15,19 @@ mdLinks(pathFile, { option: validate, option: stats, option: help })
         if (validate) {
             links.forEach((obj) => {
 
-                //console.log(`\nhref: ${obj.href} \ntext: ${obj.text} \nfile: ${obj.file} \nstatus: ${obj.linksStatus} \nmessage: ${obj.message}`)
                 console.table([`href: ${obj.href}`, `text: ${obj.text}`, `file: ${obj.file}`, `status: ${obj.linksStatus}`, `message: ${obj.message}`])
             })
 
         } if (stats) {
 
             const optionStats = statsLinks(links)
-            //console.log(` Total: ${optionStats.total} \n Unique:${optionStats.unique}`);
 
             console.table([`Total: ${optionStats.total}`, `Unique:${optionStats.unique}`]);
 
         } if (validate && stats) {
 
             const optionStats = statsLinks(links)
-            //console.log(` Broken:${optionStats.broken}`)
+
             console.table([` Broken:${optionStats.broken}`])
 
         } if (help) {

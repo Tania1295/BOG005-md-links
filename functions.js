@@ -57,41 +57,48 @@ const getFiles = (pathWay) => {
   }
   return arrayPaths;
 }
-// console.log(getFiles(pathWay))
+// console.log(getFiles(pathWay), "Ingreso")
 
 // Función getFiles ejecutandose y trayendo el array de links
 // const arrayMdFiles = getFiles(pathWay);
 // console.log("Get the array of files .md", arrayMdFiles);
 
 // Leyendo archivos para obtener los links con la información necesaria
-const readFileMd = (arrayMdFiles) => {
+const readFileMd = (fileMd) => {
+  let arrLinks = []
   return new Promise((resolve, reject) => {
-    let arrLinks = [];
-    arrayMdFiles.forEach(file => {
-      fs.readFile(file, 'utf-8', (err, data) => {
-        if (err) {
-          reject(err)
-        } else {
-          let renderer = new marked.Renderer();
-          renderer.link = (href, title, text) => {
-            let refLinks = {
-              'href': href,
-              'title': text,
-              'file': file,
-            }
-            if (refLinks.href.includes('http')) {
-              arrLinks.push(refLinks)
-            }
+    fs.readFile(fileMd, 'utf-8', (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        let renderer = new marked.Renderer();
+        renderer.link = (href, title, text) => {
+          let refLinks = {
+            'href': href,
+            'title': text,
+            'file': fileMd,
           }
-          marked.marked(data, { renderer });
-          resolve(arrLinks)
+          if (refLinks.href.includes('http')) {
+            arrLinks.push(refLinks)
+          }
         }
-      })
+        marked.marked(data, { renderer });
+
+      }
+      resolve(arrLinks)
     })
   })
 }
+
+const readAllFilesMds = (arrayMdFiles) => {
+  console.log('recibe arrayMds', arrayMdFiles);
+  let arrLinks = arrayMdFiles.map((fileMd) => {
+    return readFileMd(fileMd)
+  })
+  return Promise.all(arrLinks).then(res => res.flat())
+}
 // console.log("Should get the links of the files", readFileMd(arrayMdFiles));
-//vreadFileMd(arrayMdFiles).then((data) => { console.log('Get the array of .md', data) });
+// readFileMd(arrayMdFiles).then((data) => { console.log('Get the array of .md', data) });
 // const objeLinks = readFileMd(arrayMdFiles).then((data) => { return data });
 
 /* const objeLinks = [
@@ -145,7 +152,7 @@ module.exports = {
   extensionName,
   isDirectory,
   getFiles,
-  readFileMd,
+  readAllFilesMds,
   linksStatus,
   statsLinks
 };

@@ -7,36 +7,35 @@ const {
   existsPath,
   absolutePath,
   getFiles,
-  readFileMd,
-  linksStatus,
+  readAllFilesMds,
+  linksStatus
 } = require('./functions.js');
 
-// const pathWay = 'proof';
+const pathWay = 'proof';
 
-const mdLinks = (pathWay, option = { validate: false }) => {
+const mdLinks = (pathWay, option = { validate: true }) => {
   return new Promise((resolve, reject) => {
+    const absoPath = absolutePath(pathWay);
+    const mdFiles = getFiles(absoPath);
+
     if (existsPath(pathWay)) {
-      console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('The path exist.'));
-      const absoPath = absolutePath(pathWay);
-      console.log('The absolute path is:', absoPath);
-
-      if (fs.statSync(absoPath).isDirectory()) {
-        console.log('The directory is:', absoPath);
-        const mdFiles = getFiles(absoPath);
-        console.log('The array from the directory is:', mdFiles);
-
-        readFileMd(mdFiles).then((links) => {
-          if (option.validate === false) {
-            resolve(links);
-            return;
-          }
-          linksStatus(links).then((res) => {
-            resolve(res)
-          })
-        })
+      if (fs.statSync(absoPath)) {
+        console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('The path exist.'));
       }
     }
-  })
+    readAllFilesMds(mdFiles).then((mdFilesRead) => {
+      if (option.validate === true) {
+        resolve(linksStatus(mdFilesRead))
+      } else {
+        resolve((mdFilesRead))
+      }
+
+    })
+  });
 };
 
-module.exports = { mdLinks };
+mdLinks(pathWay).then((data) => {
+  console.log(data);
+}),
+
+  module.exports = { mdLinks };
