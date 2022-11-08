@@ -1,31 +1,43 @@
-const { statsLinks } = require('./functions.js');
+const { statsLinks, statsValidate } = require('./functions.js');
 const { mdLinks } = require('./index.js');
 const gradient = require('gradient-string');
 const console = require('console');
 const table = require('table');
 
 const pathFile = process.argv[2]
-const option = process.argv;
+const options = process.argv;
 
-function cli(pathFile, option) {
-    const optionStats = statsLinks();
-    if (option.validate === true) {
-        console.table([`href: ${obj.href}`, `text: ${obj.text}`, `file: ${obj.file}`, `status: ${obj.linksStatus}`, `message: ${obj.message}`]);
+function cli(pathFile, options) {
+    console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('Welcome to md-Link librarie to figure out about your links'))
+    if (pathFile && options === undefined) {
+        console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('The path is invalid'))
+    } else if (options.includes('--stats') && options.includes('--validate')) {
+        (mdLinks(pathFile, { validate: true }).then((answer) => {
+            console.log(statsValidate(answer))
+        })).catch(reject => {
+            console.log('It´s not a valid path', reject)
+        })
+    } else if (options.includes('--validate')) {
+        (mdLinks(pathFile, { validate: true }).then((answer) => {
+            console.log(answer)
+        })).catch(reject => {
+            console.log("The path or directory doesn´t exits", reject)
+        })
+    } else if (options.length <= 3) {
+        (mdLinks(pathFile, { validate: false }).then((answer) => {
+            console.log(answer)
+        })).catch(reject => {
+            console.log('Invalid option write --validate to know the links or \nwrite --stats to know the stats of the links or both', reject);
+        })
+    } else if (options.includes('--stats')) {
+        (mdLinks(pathFile, { validate: true }).then((answer) => {
+            console.log(statsLinks(answer))
+        })).catch(reject => {
+            console.log("The directory or file doesn´t exits", reject);
+        })
+    } else if (options !== '--stats' && options !== '--validate' && options !== undefined) {
+        console.log('Invalid option write: --validate to know the links or \nwrite --stats to know the stats of the links or both')
     }
-    if (option.validate === false) {
-        console.log(error);
-    }
-
-    if (option.validate === stats) {
-        console.table([`Total: ${optionStats.total}`, `Unique:${optionStats.unique}`]);
-    }
-
-    if (option.validate && stats) {
-        console.table([`href: ${obj.href}`, `text: ${obj.text}`, `file: ${obj.file}`, `status: ${obj.linksStatus}`, `message: ${obj.message}, Broken:${optionStats.broken}`])
-    } else {
-        console.log(error);
-    }
-
 }
 
-cli(pathFile, option);
+cli(pathFile, options)

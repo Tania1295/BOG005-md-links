@@ -91,12 +91,13 @@ const readFileMd = (fileMd) => {
 }
 
 const readAllFilesMds = (arrayMdFiles) => {
-  console.log('recibe arrayMds', arrayMdFiles);
+  // console.log('Get arrayMds', arrayMdFiles);
   let arrLinks = arrayMdFiles.map((fileMd) => {
     return readFileMd(fileMd)
   })
   return Promise.all(arrLinks).then(res => res.flat())
 }
+
 // console.log("Should get the links of the files", readFileMd(arrayMdFiles));
 // readFileMd(arrayMdFiles).then((data) => { console.log('Get the array of .md', data) });
 // const objeLinks = readFileMd(arrayMdFiles).then((data) => { return data });
@@ -134,17 +135,33 @@ const linksStatus = (objeLinks) => {
 // linksStatus(objeLinks).then((link) => console.log(link)).catch((err) => console.log(err));
 
 // Función para tener las estadisticas de los links
-const statsLinks = (arrayPromises) => {
-  const total = arrayPromises.length;
-  const unique = arrayPromises.filter((data) => data.message === 'Ok').length;
-  const broken = arrayPromises.filter((data) => data.message === 'Fail').length;
+/* const statsLinks = (arrayMdFiles) => {
+  const total = arrayMdFiles.length;
+  const unique = arrayMdFiles.filter((data) => data.message === 'Ok').length;
+  const broken = arrayMdFiles.filter((data) => data.message === 'Fail').length;
   return {
     total,
     unique,
     broken,
   };
 };
-// linksStatus(objeLinks).then((link) => console.log(statsLinks(link))).catch((err) => console.log(err));
+// linksStatus(objeLinks).then((link) => console.log(statsLinks(link))).catch((err) => console.log(err)); */
+
+const statsLinks = (objeLinks) => {
+  return {
+    Total: objeLinks.length,
+    Unique: new Set(objeLinks.map((linkObj) => linkObj.href)).size,
+  };
+};
+
+const statsValidate = (filePath) => {
+  const broken = filePath.filter((file) => file.txt === 'Fail').length;
+  return {
+    Total: filePath.length,
+    Unique: new Set(filePath.map((linkObj) => linkObj.href)).size,
+    Broken: broken,
+  };
+};
 
 module.exports = {
   existsPath,
@@ -154,5 +171,6 @@ module.exports = {
   getFiles,
   readAllFilesMds,
   linksStatus,
-  statsLinks
+  statsLinks,
+  statsValidate
 };
