@@ -1,8 +1,7 @@
 const process = require('process');
-const { statsLinks } = require('./index.js');
-const mdLinks = require('./index.js');
+const { statsLinks } = require('./functions.js');
+const { mdLinks } = require('./index.js');
 const gradient = require('gradient-string');
-const figlet = require('figlet');
 const console = require('console');
 
 const pathFile = process.argv.filter(pathWay => !(['--stats', '--validate'].includes(pathWay)))[2];
@@ -39,12 +38,3 @@ mdLinks(pathFile, { option: validate, option: stats, option: help })
 
     })
     .catch((error) => console.log(error))
-    // if(validate){
-    //     mdLinks(pat, option {valida:true, stats: false}).then(.....)
-    // }
-    // if(validate && stats){
-    //     traemelosStats()
-    // }
-    // if(ruta){
-    //     ArmaOnjeto(ruta)
-    // }

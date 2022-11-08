@@ -4,7 +4,7 @@ const marked = require('marked');
 const chalk = require('chalk');
 const fetch = require('node-fetch');
 
-const pathWay = 'proof';
+// const pathWay = 'proof';
 // const pathWay = 'package.json';
 // const pathWay = '.\\proof\\proof1.md';
 // const pathFiles = 'proof';
@@ -60,7 +60,7 @@ const getFiles = (pathWay) => {
 // console.log(getFiles(pathWay))
 
 // Función getFiles ejecutandose y trayendo el array de links
-const arrayMdFiles = getFiles(pathWay);
+// const arrayMdFiles = getFiles(pathWay);
 // console.log("Get the array of files .md", arrayMdFiles);
 
 // Leyendo archivos para obtener los links con la información necesaria
@@ -91,10 +91,10 @@ const readFileMd = (arrayMdFiles) => {
   })
 }
 // console.log("Should get the links of the files", readFileMd(arrayMdFiles));
-// readFileMd(arrayMdFiles).then((data) => { console.log('Get the array of .md', data) });
+//vreadFileMd(arrayMdFiles).then((data) => { console.log('Get the array of .md', data) });
 // const objeLinks = readFileMd(arrayMdFiles).then((data) => { return data });
 
-const objeLinks = [
+/* const objeLinks = [
   {
     href: 'https://es.wikipedia.org/wiki/Markdown',
     title: 'Markdown',
@@ -105,7 +105,7 @@ const objeLinks = [
     title: 'JavaScript V8 Chrome',
     file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
   }
-];
+]; */
 
 // Validar el estado de los links
 const linksStatus = (objeLinks) => {
@@ -124,7 +124,7 @@ const linksStatus = (objeLinks) => {
   })
   return Promise.all(readLinks);
 }
-linksStatus(objeLinks).then((link) => console.log(link)).catch((err) => console.log(err));
+// linksStatus(objeLinks).then((link) => console.log(link)).catch((err) => console.log(err));
 
 // Función para tener las estadisticas de los links
 const statsLinks = (arrayPromises) => {
@@ -137,7 +137,7 @@ const statsLinks = (arrayPromises) => {
     broken,
   };
 };
-linksStatus(objeLinks).then((link) => console.log(statsLinks(link))).catch((err) => console.log(err));
+// linksStatus(objeLinks).then((link) => console.log(statsLinks(link))).catch((err) => console.log(err));
 
 module.exports = {
   existsPath,
@@ -146,5 +146,6 @@ module.exports = {
   isDirectory,
   getFiles,
   readFileMd,
-  linksStatus
+  linksStatus,
+  statsLinks
 };

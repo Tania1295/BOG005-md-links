@@ -89,8 +89,4 @@ describe('Read files MD', () => {
   it('Read files should be a function', () => {
     expect(typeof readFileMd).toBe('function');
   });
-
-  it('Read files should be a function', () => {
-    expect(typeof readFileMd).toBe('function');
-  });
 });
