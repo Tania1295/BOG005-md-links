@@ -1,6 +1,5 @@
 const fs = require('fs');
 const gradient = require('gradient-string');
-const console = require('console');
 // const chalk = require('chalk');
 
 const {

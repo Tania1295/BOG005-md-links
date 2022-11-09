@@ -33,7 +33,7 @@ const extensionName = (pathWay) => path.extname(pathWay) === '.md';
 const isDirectory = (pathWay) => fs.statSync(pathWay).isDirectory();
 // console.log(isDirectory(pathWay));
 
-// Obtener archivos .md y leer dentro de un directorio si hay archivos .md
+// Obtener archivos .md y leer dentro de un directorio si hay archivos .md (recursividad)
 const getFiles = (pathWay) => {
   const realPath = absolutePath(pathWay);
   let arrayPaths = [];
@@ -41,9 +41,9 @@ const getFiles = (pathWay) => {
   if (fs.statSync(realPath).isFile() === true && path.extname(realPath) === '.md') {
     arrayPaths.push(realPath);
   } else if (fs.statSync(realPath).isFile() && path.extname(realPath) !== '.md') {
-    console.log(chalk.inverse.red("It´s not a .md file", realPath));
+    console.log(chalk.inverse.red("❌❌ It´s not a .md file", realPath));
   }
-  else { // Confirmar si es un directorio
+  else { // Confirmar si hay un directorio y buscar archivos .md nuevamente
     fs.readdirSync(realPath).forEach(file => {
       let pathDirectory = path.join(realPath, file);
       if (fs.statSync(realPath).isDirectory() === true) {
@@ -63,7 +63,7 @@ const getFiles = (pathWay) => {
 // const arrayMdFiles = getFiles(pathWay);
 // console.log("Get the array of files .md", arrayMdFiles);
 
-// Leyendo archivos para obtener los links con la información necesaria
+// Leyendo un archivo .md para obtener los links indepencdiente con la información necesaria
 const readFileMd = (fileMd) => {
   let arrLinks = []
   return new Promise((resolve, reject) => {
@@ -90,6 +90,7 @@ const readFileMd = (fileMd) => {
   })
 }
 
+// Resolver la promesa para todos los links
 const readAllFilesMds = (arrayMdFiles) => {
   // console.log('Get arrayMds', arrayMdFiles);
   let arrLinks = arrayMdFiles.map((fileMd) => {
@@ -97,7 +98,6 @@ const readAllFilesMds = (arrayMdFiles) => {
   })
   return Promise.all(arrLinks).then(res => res.flat())
 }
-
 // console.log("Should get the links of the files", readFileMd(arrayMdFiles));
 // readFileMd(arrayMdFiles).then((data) => { console.log('Get the array of .md', data) });
 // const objeLinks = readFileMd(arrayMdFiles).then((data) => { return data });
@@ -115,7 +115,7 @@ const readAllFilesMds = (arrayMdFiles) => {
   }
 ]; */
 
-// Validar el estado de los links
+// Validar el estado de los links con la petición http
 const linksStatus = (objeLinks) => {
   const readLinks = objeLinks.map((data) => {
     return fetch(data.href)
