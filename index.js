@@ -16,21 +16,19 @@ const mdLinks = (pathWay, options = { validate: false }) => {
   return new Promise((resolve, reject) => {
     const absoPath = absolutePath(pathWay);
     const mdFiles = getFiles(absoPath);
+    const getInfoLinks = readAllFilesMds(mdFiles);
+
     if (options.validate === false) {
       if (mdFiles.length === 0) {
-        resolve("It´s not a markdown file")
+        resolve("❌❌ It´s not a markdown file")
       }
-      resolve(readAllFilesMds(mdFiles));
+      resolve(getInfoLinks);
     } else {
       if (mdFiles.length === 0) {
-        resolve("It´s not a markdown file")
+        resolve("❌❌ It´s not a markdown file")
       }
       readAllFilesMds(mdFiles).then((mdFilesRead) => {
-        if (options.validate === true) {
-          resolve(linksStatus(mdFilesRead))
-        } else {
-          resolve((mdFilesRead))
-        }
+        linksStatus(mdFilesRead).then(filesRead => resolve(filesRead))
       })
     }
   });
