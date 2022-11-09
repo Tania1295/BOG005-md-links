@@ -1,10 +1,8 @@
 const {
-  existsPath,
   absolutePath,
-  extensionName,
-  isDirectory,
   getFiles,
-  readFileMd
+  readFileMd,
+  readAllFilesMds
 } = require("../functions.js")
 
 const testRoute = '.\\proof\\proof1.md';
@@ -13,19 +11,18 @@ const testRouteAbsolute = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-
 const testDirectory = '.\\proof';
 const testDirectoryFalse = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\test\\functions.spec.js';
 
-describe('Exists Path', () => {
-  it('Exists path should be a function', () => {
-    expect(typeof existsPath).toBe('function');
-  });
-
-  it('Should confirm if the path exits with the test route', () => {
-    expect(existsPath(testRoute)).toEqual(true);
-  });
-
-  it('Should confirm if the path not exits with the test route false', () => {
-    expect(existsPath(testRouteFalse)).toEqual(false);
-  });
-});
+const testArrayLinks = [
+  {
+    href: 'https://es.wikipedia.org/wiki/Markdown',
+    title: 'Markdown',
+    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
+  },
+  {
+    href: 'https://deve.lopers.google.com/v8/',
+    title: 'JavaScript V8 Chrome',
+    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
+  }
+];
 
 describe('Absolute Path', () => {
   it('Absolute Path should be a function', () => {
@@ -38,27 +35,6 @@ describe('Absolute Path', () => {
 
   it('Absolute Path should confirm an absolute path because receive an absolute path', () => {
     expect(absolutePath(testRouteAbsolute)).toEqual(testRouteAbsolute);
-  });
-});
-
-describe('Extension name', () => {
-  it('Extension name should be a function', () => {
-    expect(typeof extensionName).toBe('function');
-  });
-
-  it('Extension name confirm it´s a .md file', () => {
-    expect(extensionName(testRoute)).toEqual(true);
-  });
-});
-
-describe('Is a directory', () => {
-  it('Is a directory should be a function', () => {
-    expect(typeof isDirectory).toBe('function');
-  });
-
-  it('Is a directory should read the directory', () => {
-    const arrays = isDirectory(testDirectory);
-    expect(!arrays).toEqual(false);
   });
 });
 
@@ -88,5 +64,15 @@ describe('Get files', () => {
 describe('Read files MD', () => {
   it('Read files should be a function', () => {
     expect(typeof readFileMd).toBe('function');
+  });
+
+  it('Read files should return an array', () => {
+    expect(readFileMd(testRoute)).toEqual(testArrayLinks);
+  });
+});
+
+describe('Read all files MD', () => {
+  it('Read files should be a function', () => {
+    expect(typeof readAllFilesMds).toBe('function');
   });
 });

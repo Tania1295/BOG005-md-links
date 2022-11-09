@@ -1,7 +1,3 @@
-const fs = require('fs');
-const gradient = require('gradient-string');
-// const chalk = require('chalk');
-
 const {
   absolutePath,
   getFiles,

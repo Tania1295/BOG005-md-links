@@ -1,38 +1,46 @@
-const process = require('process');
-const { statsLinks } = require('./functions.js');
+const { statsLinks, statsValidate } = require('./functions.js');
 const { mdLinks } = require('./index.js');
 const gradient = require('gradient-string');
-const console = require('console');
+const figlet = require('figlet');
 
-const pathFile = process.argv.filter(pathWay => !(['--stats', '--validate'].includes(pathWay)))[2];
-const validate = process.argv.includes('--validate');
-const stats = process.argv.includes('--stats');
-const help = process.argv.includes('--help');
+const pathFile = process.argv[2]
+const options = process.argv;
 
-mdLinks(pathFile, { option: validate, option: stats, option: help })
-    .then((links) => {
-        console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('Welcome to md-Link librarie to figure out about your links'))
-        if (validate) {
-            links.forEach((obj) => {
+function cli(pathFile, options) {
 
-                console.table([`href: ${obj.href}`, `text: ${obj.text}`, `file: ${obj.file}`, `status: ${obj.linksStatus}`, `message: ${obj.message}`])
-            })
+    console.log(gradient.pastel(figlet.textSync('Md-links Librarie')));
 
-        } if (stats) {
+    console.log(gradient.cristal('Welcome to tinfantebonilla-md-links \nto figure out about the status of your links'));
 
-            const optionStats = statsLinks(links)
+    if (pathFile && options === undefined) {
+        console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')(' ⚠⚠ The path is invalid!'))
+    } else if (options.includes('--stats') && options.includes('--validate') || options.includes('--validate') && options.includes('--stats')) {
+        (mdLinks(pathFile, { validate: true }).then((answer) => {
+            console.log(statsValidate(answer))
+        })).catch(reject => {
+            console.log('It´s not a valid path')
+        })
+    } else if (options.includes('--validate')) {
+        (mdLinks(pathFile, { validate: true }).then((answer) => {
+            console.log(answer)
+        })).catch(reject => {
+            console.log("⚠⚠ The path or directory doesn´t exits")
+        })
+    } else if (options.length <= 3) {
+        (mdLinks(pathFile, { validate: false }).then((answer) => {
+            console.log(answer)
+        })).catch(reject => {
+            console.log('🛠🛠 Invalid option write --validate to know the links or \nwrite --stats to know the stats of the links or both');
+        })
+    } else if (options.includes('--stats')) {
+        (mdLinks(pathFile, { validate: true }).then((answer) => {
+            console.log(statsLinks(answer))
+        })).catch(reject => {
+            console.log("⚠⚠ The directory or file doesn´t exits");
+        })
+    } else if (options !== '--stats' && options !== '--validate' && options !== undefined) {
+        console.log('🛠🛠 Invalid option write: --validate to know the links or \nwrite --stats to know the stats of the links or --stats --validate')
+    }
+}
 
-            console.table([`Total: ${optionStats.total}`, `Unique:${optionStats.unique}`]);
-
-        } if (validate && stats) {
-
-            const optionStats = statsLinks(links)
-
-            console.table([` Broken:${optionStats.broken}`])
-
-        } if (help) {
-            console.log('Write  --validate  to know the links or \nWrite  --stats to know the stats of the links'.green)
-        }
-
-    })
-    .catch((error) => console.log(error))
+cli(pathFile, options)

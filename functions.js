@@ -9,10 +9,6 @@ const fetch = require('node-fetch');
 // const pathWay = '.\\proof\\proof1.md';
 // const pathFiles = 'proof';
 
-// Confirmar si la ruta existe
-const existsPath = (pathWay) => fs.existsSync(pathWay);
-// console.log(typeof existsPath);
-
 // Confirmar si la ruta es absoluta si no es así convertirla en absoluta
 const absolutePath = (pathWay) => {
   const absoPath = path.isAbsolute(pathWay);
@@ -24,14 +20,6 @@ const absolutePath = (pathWay) => {
   }
   return pathWay
 };
-
-// Confirmar la extensión del archivo
-const extensionName = (pathWay) => path.extname(pathWay) === '.md';
-// console.log(extensionName(pathWay));
-
-// Confirmar si es un directorio
-const isDirectory = (pathWay) => fs.statSync(pathWay).isDirectory();
-// console.log(isDirectory(pathWay));
 
 // Obtener archivos .md y leer dentro de un directorio si hay archivos .md (recursividad)
 const getFiles = (pathWay) => {
@@ -152,10 +140,7 @@ const statsValidate = (filePath) => {
 };
 
 module.exports = {
-  existsPath,
   absolutePath,
-  extensionName,
-  isDirectory,
   getFiles,
   readFileMd,
   readAllFilesMds,
