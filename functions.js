@@ -135,18 +135,6 @@ const linksStatus = (objeLinks) => {
 // linksStatus(objeLinks).then((link) => console.log(link)).catch((err) => console.log(err));
 
 // Función para tener las estadisticas de los links
-/* const statsLinks = (arrayMdFiles) => {
-  const total = arrayMdFiles.length;
-  const unique = arrayMdFiles.filter((data) => data.message === 'Ok').length;
-  const broken = arrayMdFiles.filter((data) => data.message === 'Fail').length;
-  return {
-    total,
-    unique,
-    broken,
-  };
-};
-// linksStatus(objeLinks).then((link) => console.log(statsLinks(link))).catch((err) => console.log(err)); */
-
 const statsLinks = (objeLinks) => {
   return {
     Total: objeLinks.length,
@@ -169,6 +157,7 @@ module.exports = {
   extensionName,
   isDirectory,
   getFiles,
+  readFileMd,
   readAllFilesMds,
   linksStatus,
   statsLinks,

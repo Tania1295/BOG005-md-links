@@ -1,6 +1,7 @@
 const { statsLinks, statsValidate } = require('./functions.js');
 const { mdLinks } = require('./index.js');
 const gradient = require('gradient-string');
+const figlet = require('figlet');
 const console = require('console');
 const table = require('table');
 
@@ -8,7 +9,8 @@ const pathFile = process.argv[2]
 const options = process.argv;
 
 function cli(pathFile, options) {
-    console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('Welcome to md-Link librarie to figure out about your links'))
+    console.log(gradient.pastel(figlet.textSync('Md-links Librarie')));
+    console.log(gradient.cristal('Welcome to tinfantebonilla-md-links \nto figure out about the status of your links'))
     if (pathFile && options === undefined) {
         console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')('The path is invalid'))
     } else if (options.includes('--stats') && options.includes('--validate')) {
