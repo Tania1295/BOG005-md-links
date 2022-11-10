@@ -14,29 +14,29 @@ function cli(pathFile, options) {
 
     if (pathFile && options === undefined) {
         console.log(gradient('cyan', 'pink', 'red', 'green', 'blue')(' ⚠⚠ The path is invalid!'))
-    } else if (options.includes('--stats') && options.includes('--validate') || options.includes('--validate') && options.includes('--stats')) {
+    } else if (options.includes('--stats') && options.includes('--validate')) {
         (mdLinks(pathFile, { validate: true }).then((answer) => {
             console.log(statsValidate(answer))
-        })).catch(reject => {
-            console.log('It´s not a valid path')
+        })).catch(error => {
+            console.log('It´s not a valid path', error)
         })
     } else if (options.includes('--validate')) {
         (mdLinks(pathFile, { validate: true }).then((answer) => {
             console.log(answer)
-        })).catch(reject => {
-            console.log("⚠⚠ The path or directory doesn´t exits")
+        })).catch(error => {
+            console.log("⚠⚠ The path or directory doesn´t exits", error)
         })
     } else if (options.length <= 3) {
         (mdLinks(pathFile, { validate: false }).then((answer) => {
             console.log(answer)
-        })).catch(reject => {
-            console.log('🛠🛠 Invalid option write --validate to know the links or \nwrite --stats to know the stats of the links or both');
+        })).catch(error => {
+            console.log('🛠🛠 Invalid option write --validate to know the links or \nwrite --stats to know the stats of the links or both', error);
         })
     } else if (options.includes('--stats')) {
         (mdLinks(pathFile, { validate: true }).then((answer) => {
             console.log(statsLinks(answer))
-        })).catch(reject => {
-            console.log("⚠⚠ The directory or file doesn´t exits");
+        })).catch(error => {
+            console.log("⚠⚠ The directory or file doesn´t exits", error);
         })
     } else if (options !== '--stats' && options !== '--validate' && options !== undefined) {
         console.log('🛠🛠 Invalid option write: --validate to know the links or \nwrite --stats to know the stats of the links or --stats --validate')

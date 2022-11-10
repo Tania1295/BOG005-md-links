@@ -9,6 +9,8 @@ const {
 
 const mdLinks = (pathWay, options = { validate: false }) => {
   return new Promise((resolve, reject) => {
+    // throw Error('MD LINKS');
+    // reject('Md Links!')
     const absoPath = absolutePath(pathWay);
     const mdFiles = getFiles(absoPath);
     const getInfoLinks = readAllFilesMds(mdFiles);

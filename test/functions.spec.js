@@ -16,9 +16,17 @@ const testArrayLinks = [
     href: 'https://es.wikipedia.org/wiki/Markdown',
     title: 'Markdown',
     file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
+  }
+];
+
+const testArrayLinksAll = [
+  {
+    href: 'https://es.wikipedia.org/wiki/Markdown',
+    title: 'Markdown',
+    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
   },
   {
-    href: 'https://deve.lopers.google.com/v8/',
+    href: 'https://developers.google.com/v8/',
     title: 'JavaScript V8 Chrome',
     file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
   }
@@ -66,13 +74,21 @@ describe('Read files MD', () => {
     expect(typeof readFileMd).toBe('function');
   });
 
-  it('Read files should return an array', () => {
-    expect(readFileMd(testRoute)).toEqual(testArrayLinks);
+  it.only('Read files should return an array', () => {
+    return readFileMd(testRouteAbsolute).then(data => {
+      expect(data).toBe(testArrayLinks);
+    });
   });
 });
 
 describe('Read all files MD', () => {
   it('Read files should be a function', () => {
     expect(typeof readAllFilesMds).toBe('function');
+  });
+
+  it.only('Read files should return an array', () => {
+    return readAllFilesMds(testRouteAbsolute).then(data => {
+      expect(data).toBe(testArrayLinksAll);
+    });
   });
 });
