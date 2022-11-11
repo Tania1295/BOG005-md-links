@@ -1,6 +1,6 @@
 # Markdown Link Librarie
 
-![Markdown title](./BOG005-md-links/img/mdlinks.JPG)
+![Markdown title](/img/mdlinks.JPG)
 
 ## Index
 
@@ -153,5 +153,5 @@ Broken: 1
 
 ## 4. Flowchart
 
-![CLI Flowchart](./BOG005-md-links/img/Diagrama%20de%20Flujo%20API%20CLI.png)
-![API Flowchart](./BOG005-md-links/img/Diagrama%20de%20Flujo%20CLI.png)
+![CLI Flowchart](/BOG005-md-links/img/Diagrama%20de%20Flujo%20API%20CLI.png)
+![API Flowchart](/BOG005-md-links/img/Diagrama%20de%20Flujo%20CLI.png)
