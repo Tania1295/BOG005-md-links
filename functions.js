@@ -132,7 +132,7 @@ const statsLinks = (objeLinks) => {
 };
 
 const statsValidate = (filePath) => {
-  const broken = filePath.filter((file) => file.txt === 'Fail').length;
+  const broken = filePath.filter((file) => file.message === 'Fail').length;
   return {
     Total: filePath.length,
     Unique: new Set(filePath.map((linkObj) => linkObj.href)).size,

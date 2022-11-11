@@ -1,133 +1,131 @@
 # Markdown Link Librarie
 
-![Alt](../BOG005-md-links/img/mdlinks.JPG)
+![Markdown title](../BOG005-md-links/img/mdlinks.JPG)
 
-## Índice
+## Index
 
-- [1. Preámbulo](#1-preámbulo)
-- [2. Resumen del proyecto](#2-resumen-del-proyecto)
-- [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
-- [4. Consideraciones generales](#4-consideraciones-generales)
-- [5. Criterios de aceptación mínimos del proyecto](#5-criterios-de-aceptación-mínimos-del-proyecto)
+- [1. Project Summary](#1-project-summary)
+- [2. Installation](#2-installation)
+- [3. Usage](#3-usage)
+- [4. Flowchart](#4-flowchart)
 
 ---
 
-## 1. Preámbulo
+## 1. Project Summary
 
-[Markdown](https://es.wikipedia.org/wiki/Markdown) es un lenguaje de marcado
-ligero muy popular entre developers. Es usado en muchísimas plataformas que
-manejan texto plano (GitHub, foros, blogs, ...) y es muy común
-encontrar varios archivos en ese formato en cualquier tipo de repositorio
-(empezando por el tradicional `README.md`).
+[Markdown](https://es.wikipedia.org/wiki/Markdown) is a markup language lightweight very popular among developers. It is used on many platforms handle plain text (GitHub, forums, blogs, ...) and it is very common
+find multiple files in that format in any kind of repository (starting with the traditional `README.md`).
 
-Estos archivos `Markdown` normalmente contienen _links_ (vínculos/ligas) que
-muchas veces están rotos o ya no son válidos y eso perjudica mucho el valor de
-la información que se quiere compartir.
+These `Markdown` iles usually contain _links_ that
+many times they are broken or no longer valid and that greatly damages the value of
+the information you want to share.
 
-A partir de esto se crea una herramienta usando [Node.js](https://nodejs.org/), que lea y analice archivos
-en formato `Markdown`, para verificar los links que contengan y reportar
-algunas estadísticas.
+We develop a tool using [Node.js](https://nodejs.org/), that read and parse files
+in `Markdown` format, to verify with a http request the status of the links, and generate some statistics.
 
-![md-links](https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg)
+## 2. Installation
 
-## 2. Resumen del proyecto
+On the command line you must write:
 
-##### Argumentos
+```
+npm install tinfantebonilla-md-links
+```
 
-- `path`: Ruta **absoluta** o **relativa** al **archivo** o **directorio**.
-  Si la ruta pasada es relativa, debe resolverse como relativa al directorio
-  desde donde se invoca node - _current working directory_).
-- `options`: Un objeto con **únicamente** las siguientes propiedades:
-  - `validate`: Booleano que determina si se desea validar los links
-    encontrados.
-  - `stats`: Booleano que determina si se desea obtener un output
-    con información estadística general.
+## 3. Usage
 
-##### Valor de retorno
+### 3.1 API
 
-La función debe **retornar una promesa** (`Promise`) que **resuelva a un arreglo**
-(`Array`) de objetos (`Object`), donde cada objeto representa un link y contiene
-las siguientes propiedades
-
-Con `validate:false` :
-
-- `href`: URL encontrada.
-- `text`: Texto que aparecía dentro del link (`<a>`).
-- `file`: Ruta del archivo donde se encontró el link.
-
-Con `validate:true` :
-
-- `href`: URL encontrada.
-- `text`: Texto que aparecía dentro del link (`<a>`).
-- `file`: Ruta del archivo donde se encontró el link.
-- `status`: Código de respuesta HTTP.
-- `ok`: Mensaje `fail` en caso de fallo u `ok` en caso de éxito.
-
-#### Ejemplo (resultados como comentarios)
+**Import** the library with `require()`
 
 ```js
-const mdLinks = require("md-links");
+const { mdLinks } = require("tinfantebonilla-md-links");
+```
 
-mdLinks("./some/example.md")
-  .then((links) => {
+This is the function you will use:
+
+##### `mdLinks(path, options)`
+
+- `path`: _absolute_ or _relative_ route to the _file_ or _directory_.
+- `options`: An object with only this property:
+  - `validate`: Boolean that determines if links need to be validated.
+
+It _returns_ a `Promise` that is _resolved_ with an `Array` of objects, where every `Object` represents a link and contains these properties:
+
+With `validate:false` :
+
+- `href`: URL that was found.
+- `text`: Text inside the link (`<a>`).
+- `file`: Files's route where the link was found.
+
+With `validate:true` :
+
+- `href`: URL that was found.
+- `text`: Text inside the link (`<a>`).
+- `file`: Files's route where the link was found.
+- `status`: Response HTTP Code.
+- `ok`: Message `fail` or `ok` (if it was successful).
+
+Examples (results as comments):
+
+```js
+const { mdLinks } = require("jleon-md-links");
+mdLinks("./some/example.md", { validate: false })
+  .then(
+    (links) => console.log(links)
     // => [{ href, text, file }, ...]
-  })
+  )
   .catch(console.error);
-
 mdLinks("./some/example.md", { validate: true })
-  .then((links) => {
+  .then(
+    (links) => console.log(links)
     // => [{ href, text, file, status, ok }, ...]
-  })
+  )
   .catch(console.error);
-
-mdLinks("./some/dir")
-  .then((links) => {
+mdLinks("./some/dir", { validate: false })
+  .then(
+    (links) => console.log(links)
     // => [{ href, text, file }, ...]
-  })
+  )
+  .catch(console.error);
+mdLinks("./some/dir", { validate: true })
+  .then(
+    (links) => console.log(links)
+    // => [{ href, text, file, status, ok }, ...]
+  )
   .catch(console.error);
 ```
 
-### 2) CLI (Command Line Interface - Interfaz de Línea de Comando)
+### 3.2 CLI
 
-El ejecutable de nuestra aplicación debe poder ejecutarse de la siguiente
-manera a través de la **terminal**:
+This is the way you can use the executable file by the command line:
 
 `md-links <path-to-file> [options]`
 
-Por ejemplo:
+An example:
 
 ```sh
 $ md-links ./some/example.md
-./some/example.md http://algo.com/2/3/ Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html algún doc
+./some/example.md http://something.com/2/3/ Link to something
+./some/example.md https://otra-cosa.net/any-doc.html any doc
 ./some/example.md http://google.com/ Google
 ```
 
-#### Options
+##### Options
 
 ##### `--validate`
 
-Si pasamos la opción `--validate`, el módulo debe hacer una petición HTTP para
-averiguar si el link funciona o no. Si el link resulta en una redirección a una
-URL que responde ok, entonces consideraremos el link como ok.
-
-Por ejemplo:
+An example:
 
 ```sh
 $ md-links ./some/example.md --validate
-./some/example.md http://algo.com/2/3/ ok 200 Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html fail 404 algún doc
+./some/example.md http://something.com/2/3/ Ok 200 Link to something
+./some/example.md https://otra-cosa.net/any-doc.html Fail 404 any doc
 ./some/example.md http://google.com/ ok 301 Google
 ```
 
-Vemos que el _output_ en este caso incluye la palabra `ok` o `fail` después de
-la URL, así como el status de la respuesta recibida a la petición HTTP a dicha
-URL.
-
 ##### `--stats`
 
-Si pasamos la opción `--stats` el output (salida) será un texto con estadísticas
-básicas sobre los links.
+An example:
 
 ```sh
 $ md-links ./some/example.md --stats
@@ -135,8 +133,9 @@ Total: 3
 Unique: 3
 ```
 
-También podemos combinar `--stats` y `--validate` para obtener estadísticas que
-necesiten de los resultados de la validación.
+Also you can use both `--stats` and `--validate` (it doesn´t matter the order).
+
+Examples:
 
 ```sh
 $ md-links ./some/example.md --stats --validate
@@ -144,3 +143,15 @@ Total: 3
 Unique: 3
 Broken: 1
 ```
+
+```sh
+$ md-links ./some/example.md --validate --stats
+Total: 3
+Unique: 3
+Broken: 1
+```
+
+## 4. Flowchart
+
+![CLI Flowchart](../BOG005-md-links/img/Diagrama%20de%20Flujo%20API%20CLI.png)
+![API Flowchart](../BOG005-md-links/img/Diagrama%20de%20Flujo%20CLI.png)
