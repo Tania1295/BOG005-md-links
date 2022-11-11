@@ -153,5 +153,5 @@ Broken: 1
 
 ## 4. Flowchart
 
-![CLI Flowchart](/BOG005-md-links/img/Diagrama%20de%20Flujo%20API%20CLI.png)
-![API Flowchart](/BOG005-md-links/img/Diagrama%20de%20Flujo%20CLI.png)
+![CLI Flowchart](/img/DiagramadeFlujoAPICLI.png)
+![API Flowchart](/img/DiagramadeFlujoCLI.png)
