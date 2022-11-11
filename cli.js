@@ -18,25 +18,25 @@ function cli(pathFile, options) {
         (mdLinks(pathFile, { validate: true }).then((answer) => {
             console.log(statsValidate(answer))
         })).catch(error => {
-            console.log('It´s not a valid path', error)
+            console.log('It´s not a valid path')
         })
     } else if (options.includes('--validate')) {
         (mdLinks(pathFile, { validate: true }).then((answer) => {
             console.log(answer)
         })).catch(error => {
-            console.log("⚠⚠ The path or directory doesn´t exits", error)
+            console.log("⚠⚠ The path or directory doesn´t exits")
         })
     } else if (options.length <= 3) {
         (mdLinks(pathFile, { validate: false }).then((answer) => {
             console.log(answer)
         })).catch(error => {
-            console.log('🛠🛠 Invalid option write --validate to know the links or \nwrite --stats to know the stats of the links or both', error);
+            console.log('🛠🛠 Invalid option write --validate to know the links or \nwrite --stats to know the stats of the links or both');
         })
     } else if (options.includes('--stats')) {
         (mdLinks(pathFile, { validate: true }).then((answer) => {
             console.log(statsLinks(answer))
         })).catch(error => {
-            console.log("⚠⚠ The directory or file doesn´t exits", error);
+            console.log("⚠⚠ The directory or file doesn´t exits");
         })
     } else if (options !== '--stats' && options !== '--validate' && options !== undefined) {
         console.log('🛠🛠 Invalid option write: --validate to know the links or \nwrite --stats to know the stats of the links or --stats --validate')

@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 // const pathWay = 'package.json';
 // const pathWay = '.\\proof\\proof1.md';
 // const pathFiles = 'proof';
+// const pathWay = '.\\proof.md';
 
 // Confirmar si la ruta es absoluta si no es así convertirla en absoluta
 const absolutePath = (pathWay) => {
@@ -112,8 +113,8 @@ const linksStatus = (objeLinks) => {
         data.message = promiseFetch.status <= 399 ? 'Ok' : 'Fail';
         return data;
       })
-      .catch((error) => {
-        data.status = 'Not found' + " " + error;
+      .catch(() => {
+        data.status = 'Server not responding';
         data.message = 'Fail';
         return data;
       })

@@ -2,8 +2,16 @@ const {
   absolutePath,
   getFiles,
   readFileMd,
-  readAllFilesMds
-} = require("../functions.js")
+  readAllFilesMds,
+  statsLinks,
+  statsValidate
+} = require("../functions.js");
+
+const { dataMock } = require("./mockdata.js");
+
+const fetch = require('node-fetch');
+
+jest.mock('node-fetch');
 
 const testRoute = '.\\proof\\proof1.md';
 const testRouteFalse = '.\\proof1.md';
@@ -11,34 +19,13 @@ const testRouteAbsolute = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-
 const testDirectory = '.\\proof';
 const testDirectoryFalse = 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\test\\functions.spec.js';
 
-const testArrayLinks = [
-  {
-    href: 'https://es.wikipedia.org/wiki/Markdown',
-    title: 'Markdown',
-    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
-  }
-];
-
-const testArrayLinksAll = [
-  {
-    href: 'https://es.wikipedia.org/wiki/Markdown',
-    title: 'Markdown',
-    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
-  },
-  {
-    href: 'https://developers.google.com/v8/',
-    title: 'JavaScript V8 Chrome',
-    file: 'C:\\Users\\pc 1\\Documents\\Proyectos Lab\\BOG005-md-links\\proof\\proof1.md'
-  }
-];
-
 describe('Absolute Path', () => {
   it('Absolute Path should be a function', () => {
     expect(typeof absolutePath).toBe('function');
   });
 
   it('Absolute Path should confirm if the path is Absolute, else convert to absolute', () => {
-    expect(absolutePath(testRoute)).toEqual(testRouteAbsolute);
+    expect(absolutePath(testRoute)).toBe(testRouteAbsolute);
   });
 
   it('Absolute Path should confirm an absolute path because receive an absolute path', () => {
@@ -66,18 +53,11 @@ describe('Get files', () => {
   it("Get file should return an empty array when it´s not a .md file", () => {
     expect(getFiles(testDirectoryFalse)).toEqual([]);
   });
-
 });
 
 describe('Read files MD', () => {
   it('Read files should be a function', () => {
     expect(typeof readFileMd).toBe('function');
-  });
-
-  it.only('Read files should return an array', () => {
-    return readFileMd(testRouteAbsolute).then(data => {
-      expect(data).toBe(testArrayLinks);
-    });
   });
 });
 
@@ -85,10 +65,24 @@ describe('Read all files MD', () => {
   it('Read files should be a function', () => {
     expect(typeof readAllFilesMds).toBe('function');
   });
+});
 
-  it.only('Read files should return an array', () => {
-    return readAllFilesMds(testRouteAbsolute).then(data => {
-      expect(data).toBe(testArrayLinksAll);
-    });
+describe('Stats for the links', () => {
+  it('StatsLinks should be a function', () => {
+    expect(typeof statsLinks).toBe('function');
+  });
+
+  it('StatsLinks should return the stats for the links found', () => {
+    expect(statsLinks(dataMock.validateTrue)).toEqual(dataMock.stats);
+  });
+});
+
+describe('Stats and Validate for the links', () => {
+  it('StatsValidate should be a function', () => {
+    expect(typeof statsValidate).toBe('function');
+  });
+
+  it('StatsValidate should return total, unique and broken', () => {
+    expect(statsValidate(dataMock.validateTrue)).toEqual(dataMock.statsAndValidate);
   });
 });
