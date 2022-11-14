@@ -21,6 +21,9 @@
     ],
     "author": "Tania Infante Bonilla",
     "license": "ISC",
+    "bin": {
+        "mdlinks": "cli.js"
+    },
     "bugs": {
         "url": "https://github.com/Tania1295/BOG005-md-links/issues"
     },
