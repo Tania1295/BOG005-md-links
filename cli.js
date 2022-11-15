@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { statsLinks, statsValidate } = require('./functions.js');
 const { mdLinks } = require('./index.js');
 const gradient = require('gradient-string');
